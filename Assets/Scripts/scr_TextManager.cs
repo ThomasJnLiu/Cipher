@@ -19,15 +19,14 @@ public class scr_TextManager : MonoBehaviour
 
     int j = 0;
     int l = 0;
-    int indexA = 0;
-    int indexB = 0;
+    public int indexA;
+    public int indexB = 0;
 
 
     //keeps track of when textbox is typing to see if player can skip through the text or not
     bool isTyping;
 
     public float delay;
-
 
     // Use this for initialization
     void Start()
@@ -54,9 +53,7 @@ public class scr_TextManager : MonoBehaviour
             }
             else
             {
-                //Debug.Log(j + ", " + l);
                 scriptArray[j, l] = tempArray[i];
-                //Debug.Log(scriptArray[j, l]);
                 l++;
             }
         }
@@ -66,11 +63,16 @@ public class scr_TextManager : MonoBehaviour
     void Update()
     {
         //test function to call and test textbox, delete later
-        if (Input.GetKey("z") && button.activeInHierarchy == false)
+        if (Input.GetKeyDown("z") && button.activeInHierarchy == false)
         {
             button.SetActive(true);
-            portrait.SetActive(true);
-            ShowTextbox(0, 0, delay);
+            //using indexA as the parameter allows textbox to start showing text on a specified line
+            ShowTextbox(indexA, 0, delay);
+        }
+
+        if (Input.GetKeyDown("z") && button.activeInHierarchy == true)
+        {
+            NextLine();
         }
     }
 
@@ -79,7 +81,7 @@ public class scr_TextManager : MonoBehaviour
     //takes location/index of script, assigns it to textArea, opens textbox so player can advance script
     public void ShowTextbox(int indexC, int indexD, float delayInput)
     {
-        indexA = indexC;
+        //indexA = indexC;
         indexB = indexD;
         delay = delayInput;
 
@@ -136,6 +138,7 @@ public class scr_TextManager : MonoBehaviour
         //check if portrait index is given in script
         if (currentSentence.Contains("["))
         {
+            portrait.SetActive(true);
             //if so, extract the portrait index from the script
             portraitIndex = currentSentence.Substring(1, currentSentence.IndexOf("]") - 1);
             //truncate currentSentence so that it begins after the portrait index

@@ -1,4 +1,4 @@
-[0]Sample Text
+Sample Text
 [1] Happy sample text
 [2] Sad sample text
 [3] Surprised sample text
